@@ -7,12 +7,6 @@ DATABASE_URL = 'postgresql://postgres:welcome@localhost:5432/postgres'
 engine = create_engine(DATABASE_URL)
 
 
-class Group(Base):
-    __tablename__ = 'groups'
-    id = Column(Integer, primary_key=True)
-    name = Column(String)
-    students = relationship("Student", back_populates="group")
-
 class Student(Base):
     __tablename__ = 'students'
     id = Column(Integer, primary_key=True)
@@ -20,6 +14,12 @@ class Student(Base):
     group_id = Column(Integer, ForeignKey('groups.id'))
     group = relationship("Group", back_populates="students")
     grades = relationship("Grade", back_populates="student")
+
+class Group(Base):
+    __tablename__ = 'groups'
+    id = Column(Integer, primary_key=True)
+    name = Column(String)
+    students = relationship("Student", back_populates="group")
 
 class Teacher(Base):
     __tablename__ = 'teachers'
@@ -40,10 +40,9 @@ class Grade(Base):
     id = Column(Integer, primary_key=True)
     student_id = Column(Integer, ForeignKey('students.id'))
     subject_id = Column(Integer, ForeignKey('subjects.id'))
-    score = Column(Integer)
+    grade = Column(Integer)
     date = Column(Date)
     student = relationship("Student", back_populates="grades")
     subject = relationship("Subject", back_populates="grades")
 
 Base.metadata.create_all(engine)
-print("DB created")

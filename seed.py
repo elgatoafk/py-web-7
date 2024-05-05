@@ -32,19 +32,18 @@ session.commit()
 
 students = []
 for _ in range(NUMBER_STUDENTS):
-    student = Student(name=fake.name())
+    student = Student(name=fake.name(), group_id = randint(1, NUMBER_GROUPS))
     session.add(student)
     session.commit()
     students.append(student)
 
 for student in students:
     for _ in range(NUMBER_GRADES):
-        score = randint(1,100)
+        grade = randint(1,100)
         date= fake.date_this_year()
         subject_id = randint(1, NUMBER_SUBJECTS)
-        grade = Grade(student_id = student.id, subject_id = subject_id, score = score, date = date)
+        grade = Grade(student_id = student.id, subject_id = subject_id, grade = grade, date = date)
         session.add(grade)
 
 
 session.commit()
-print("Data posted, see ya")
