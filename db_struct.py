@@ -46,3 +46,4 @@ class Grade(Base):
     subject = relationship("Subject", back_populates="grades")
 
 Base.metadata.create_all(engine)
+print("DB created")
